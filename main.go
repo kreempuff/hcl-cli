@@ -19,11 +19,12 @@ handle {
 		panic(err)
 	}
 
-	switch astFile.Node.(type) {
-	case *ast.ObjectList:
-		objectList := astFile.Node.(*ast.ObjectList)
-		handleObjectList(objectList)
-	}
+	s, err := toJson(astFile)
+	fmt.Println(s)
+}
+
+func toJson(astFile *ast.File) (string, error) {
+	return "", nil
 }
 
 func handleObjectList(list *ast.ObjectList) {
