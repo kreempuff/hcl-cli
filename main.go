@@ -29,7 +29,7 @@ handle {
 func toJson(astFile *ast.File) (string, error) {
 	buf := bytes.Buffer{}
 	src := handleNode(astFile.Node)
-	fmt.Println(src)
+	src = fmt.Sprintf("{%s}", src)
 	err := json.Compact(&buf, []byte(src))
 	return string(buf.Bytes()), err
 }
