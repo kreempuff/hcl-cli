@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/hashicorp/hcl"
 	"io"
@@ -52,7 +53,12 @@ func Test_toJson(t *testing.T) {
 
 		switch ext {
 		case "json":
-			holder.json = b.Bytes()
+			dst := bytes.Buffer{}
+			err = json.Compact(&dst, b.Bytes())
+			if err != nil {
+				panic(err)
+			}
+			holder.json = dst.Bytes()
 		case "hcl":
 			holder.hcl = b.Bytes()
 		default:
