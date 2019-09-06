@@ -44,8 +44,19 @@ func handleNode(node ast.Node) string {
 		return handleLiteral(node.(*ast.LiteralType))
 	case *ast.ObjectType:
 		return handleObjectType(node.(*ast.ObjectType))
+	case *ast.ListType:
+		return handleListType(node.(*ast.ListType))
 	}
 	return ""
+}
+
+func handleListType(listType *ast.ListType) string {
+	list := []string{}
+	for _, item := range listType.List {
+		list = append(list, handleNode(item))
+	}
+
+	return fmt.Sprintf("[%s]", strings.Join(list, ","))
 }
 
 func handleObjectType(objectType *ast.ObjectType) string {
