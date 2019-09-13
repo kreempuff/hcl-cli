@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/hcl"
 	"github.com/hashicorp/hcl/hcl/ast"
+	_ "github.com/hashicorp/hcl/hcl/token"
 	"strings"
 )
 
