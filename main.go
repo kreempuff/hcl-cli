@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/hcl"
 	"github.com/hashicorp/hcl/hcl/ast"
+	"github.com/hashicorp/hcl/hcl/token"
 	_ "github.com/hashicorp/hcl/hcl/token"
 	"strings"
 )
@@ -90,5 +91,14 @@ func handleObjectItem(item *ast.ObjectItem) string {
 }
 
 func handleLiteral(item *ast.LiteralType) string {
+	switch item.Token.Type {
+	case token.HEREDOC:
+		var tokenIdentifer string
+		firstNewline := strings.Index(item.Token.Text, "\n")
+		tokenIdentifer = item.Token.Text[2:firstNewline]
+		end := strings.LastIndex(item.Token.Text, tokenIdentifer)
+		return fmt.Sprintf("\"%s\"", strings.ReplaceAll(item.Token.Text[firstNewline+1:end], "\n", "\\n"))
+	}
+
 	return item.Token.Text
 }

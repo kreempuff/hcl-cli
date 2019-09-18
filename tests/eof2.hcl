@@ -1,0 +1,2 @@
+eof = <<RANDOM
+RANDOM
